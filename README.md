@@ -46,36 +46,6 @@ La API Translator Text permite traducir texto en tiempo real entre más de 70 id
 
 ---
 
-## 💸 Planes y Costos
-
-### ✅ F0 - Gratuito
-<img src="https://github.com/user-attachments/assets/2de68316-bc3b-41a6-94e6-934796d2b808" alt="Costo F0 Gratuito" style="width:100%; max-width:300px; display:block; margin:auto;">
-
-### 💳 S1 - Pago por uso
-<img src="https://github.com/user-attachments/assets/4c84b95f-89a9-4625-9f11-a842f454f72f" alt="Costo S1 Pago por uso" style="width:100%; max-width:300px; display:block; margin:auto;">
-
----
-
-## 🔹 Límites del servicio
-
-- Se cobra por **número de caracteres**, no por solicitudes.
-- **Límite por solicitud:** 50,000 caracteres.
-- Si traduces a varios idiomas, se multiplica el conteo de caracteres.
-
-### ⚠þ Cuidado con la cuota por hora
-
-La cuota por hora se consume de forma uniforme. Ejemplo:
-
-> Si tienes 2M de caracteres/hora (nivel F0), úsalos a un ritmo de ~33,300 caracteres/minuto.
-
-**Errores comunes:**
-- Superar el límite de cuota.
-- Enviar muchos caracteres en muy poco tiempo.
-
-<img src="https://github.com/user-attachments/assets/1d564c5e-4d66-4ed9-98c5-e600e33a4cbd" alt="Cuota agotada" style="width:100%; max-width:600px; display:block; margin:auto;">
-
----
-
 # 🌍 Idiomas soportados
 
 > La API soporta **184 idiomas** ❤️. Cada uno identificado con sus códigos ISO 639-1 y ISO 639-2.
