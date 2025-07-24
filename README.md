@@ -1,4 +1,4 @@
-# 🌐 Microservicio de Traducción de Texto - `TranslateTextEdu`
+# 🌐 Translaator Text Azure - Backend
 
 Este proyecto implementa un microservicio **reactivo** que permite traducir textos entre diferentes idiomas utilizando **Azure Cognitive Services Translator API**. También detecta el idioma de entrada y consulta los idiomas disponibles. Las traducciones son persistidas en una base de datos **PostgreSQL** utilizando **Spring WebFlux + R2DBC**.
 
