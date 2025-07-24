@@ -1,1 +1,1 @@
-# TranslatorText
+# Translator Text Azure

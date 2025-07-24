@@ -1,0 +1,10 @@
+version: '3.8'
+
+services:
+  translate-text-edu-fe:
+    image: sebast19/translate-azure-fe:latest
+    build:
+      context: .
+    ports:
+      - "5173:5173" 
+

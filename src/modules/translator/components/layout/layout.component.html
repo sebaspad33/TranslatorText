@@ -1,0 +1,138 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content>
+    <!-- Barra superior con icono y título -->
+    <mat-toolbar color="white" class="toolbar">
+      <img src="https://img.icons8.com/?size=100&id=VLKafOkk3sBX&format=png&color=ffffff" alt="Icono"
+        class="toolbar-icon">
+      <span class="header-title">Traductor</span>
+    </mat-toolbar>
+
+    <!-- Contenido principal con distribución de columnas -->
+    <div class="content">
+      <h1>Bienvenido al Traductor de Texto de Azure</h1>
+      <p>Introduce el texto que deseas traducir:</p>
+
+      <!-- Contenedor principal para dividir en dos columnas -->
+      <div class="translation-columns">
+        <!-- Panel Izquierdo: Entrada de Traducción -->
+        <div class="left-panel">
+          <mat-card class="translation-input-panel">
+            <!-- Campo de texto para ingresar el texto a traducir -->
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Texto a traducir</mat-label>
+              <textarea matInput placeholder="Escribe aquí..." rows="5" [(ngModel)]="textToTranslate"
+                (ngModelChange)="onTextChange($event)"></textarea>
+            </mat-form-field>
+
+            <!-- Botón para traducir -->
+            <button mat-raised-button color="primary" (click)="traducir()">Traducir</button>
+          </mat-card>
+
+          <!-- Selectores de idioma debajo del panel de traducción -->
+          <div class="language-selectors">
+            <!-- Selector de Idioma de Origen -->
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Idioma de origen</mat-label>
+              <mat-select [(ngModel)]="sourceLanguage" class="language-select">
+                <mat-option *ngFor="let language of supportedLanguages | keyvalue" [value]="language.key">
+                  <span class="language-option">{{ language.value }}</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <!-- Selector de Idioma de Destino -->
+            <mat-form-field appearance="fill" class="full-width">
+              <mat-label>Idioma de destino</mat-label>
+              <mat-select [(ngModel)]="targetLanguage" class="language-select">
+                <mat-option *ngFor="let language of supportedLanguages | keyvalue" [value]="language.key">
+                  <span class="language-option">{{ language.value }}</span>
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Panel Derecho: Última Traducción con Pestañas -->
+        <div class="right-panel">
+          <mat-card class="translation-result-panel">
+            <div class="tabs-container">
+              <mat-tab-group>
+                <!-- Pestaña Última Traducción -->
+                <mat-tab label="Última Traducción">
+
+                  <div class="body-last_traduccion">
+                    <mat-spinner *ngIf="isLoading" diameter="30"></mat-spinner>
+                    <div *ngIf="lastTranslation && !isLoading">
+                      <p><strong>Texto Original:</strong> {{ lastTranslation.request_text }}</p>
+                      <p><strong>Texto Traducido:</strong> {{ lastTranslation.translated_text }}</p>
+                      <p><strong>Idioma de Origen:</strong> {{ lastTranslation.from_lang }}</p>
+                      <p><strong>Idioma de Destino:</strong> {{ lastTranslation.to_lang }}</p>
+                    </div>
+                    <p *ngIf="!lastTranslation && !isLoading">Aquí aparecerá la última traducción.</p>
+                  </div>
+                </mat-tab>
+
+                <!-- Pestaña Traducciones Activas -->
+                <mat-tab label="Activas">
+                  <div class="translation-active">
+                    <mat-spinner *ngIf="isLoading" diameter="30"></mat-spinner>
+                    <div *ngIf="activeTranslations && !isLoading" class="translation-panel-scroll">
+                      <mat-card *ngFor="let translation of activeTranslations" class="translation-item">
+                        <p><strong>Texto Original:</strong> {{ translation.request_text }}</p>
+                        <p><strong>Texto Traducido:</strong> {{ translation.translated_text }}</p>
+                        <p><strong>Idioma de Origen:</strong> {{ supportedLanguages.get(translation.from_lang) ||
+                          translation.from_lang }}</p>
+                        <p><strong>Idioma de Destino:</strong> {{ supportedLanguages.get(translation.to_lang) ||
+                          translation.to_lang }}</p>
+                        <p><strong>Estado:</strong> {{ translation.status }}</p>
+
+                        <!-- Contenedor para alinear los botones -->
+                        <div class="button-group">
+                          <button class="button-edit" mat-icon-button color="primary" (click)="openEditModal(translation)">
+                            <img src="https://img.icons8.com/?size=100&id=8186&format=png&color=228BE6" alt="edit icon"/>
+                          </button>
+                          <button class="button-delete" mat-icon-button color="warn" (click)="openDeleteModal(translation)">
+                            <img src="https://img.icons8.com/?size=100&id=11767&format=png&color=FA5252" alt="delete icon">
+                          </button>
+                        </div>
+                      </mat-card>
+                    </div>
+                    <p *ngIf="!activeTranslations || activeTranslations.length === 0 && !isLoading">
+                      No hay traducciones activas.
+                    </p>
+                  </div>
+                </mat-tab>
+
+
+                <!-- Nueva Pestaña: Traducciones Inactivas -->
+                <mat-tab label="Inactivas">
+                  <div class="translation-inactive">
+                    <mat-spinner *ngIf="isLoading" diameter="30"></mat-spinner>
+                    <div *ngIf="inactiveTranslations && !isLoading" class="translation-panel-scroll">
+                      <mat-card *ngFor="let translation of inactiveTranslations" class="translation-item">
+                        <p><strong>Texto Original:</strong> {{ translation.request_text }}</p>
+                        <p><strong>Texto Traducido:</strong> {{ translation.translated_text }}</p>
+                        <p><strong>Idioma de Origen:</strong> {{ translation.from_lang }}</p>
+                        <p><strong>Idioma de Destino:</strong> {{ translation.to_lang }}</p>
+                        <p><strong>Estado:</strong> {{ translation.status }}</p>
+                        <button class="button-restore" mat-icon-button color="primary" (click)="openRestoreModal(translation)">
+                          <img src="https://img.icons8.com/?size=100&id=AXYl3xTwT7Jy&format=png&color=1A1A1A" alt="restore icon">
+                        </button>
+                      </mat-card>
+                    </div>
+                    <p *ngIf="!inactiveTranslations || inactiveTranslations.length === 0 && !isLoading">
+                      No hay traducciones inactivas.
+                    </p>
+                  </div>
+                </mat-tab>
+
+              </mat-tab-group>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
