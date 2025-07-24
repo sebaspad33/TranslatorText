@@ -1,7 +1,3 @@
-<div align="center">
-  <img src="https://www.yash.com/wp-content/uploads/2023/03/blog-main-banner-azure.png" alt="Azure Cognitive Services" style="width:100%; height:260px; object-fit:cover; border-radius: 100%;">
-</div>
-
 # ✨ Aprende sobre Azure Cognitive Services
 
 <div style="padding-bottom: 20px;">
