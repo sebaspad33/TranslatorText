@@ -1,0 +1,35 @@
+# kubectl apply -f deployment.yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: translate-azure-be
+  namespace: sebas
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: translate-azure-be
+  template:
+    metadata:
+      labels:
+        app: translate-azure-be
+    spec:
+      containers:
+      - name: translate-azure-be
+        image: sebast19/translate-azure:latest   # Reemplaza con tu imagen Docker
+        env:
+        - name: DATABASE_URL
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials                # Nombre del Secret
+              key: DATABASE_URL                         # Clave dentro del Secret
+        - name: DATABASE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DATABASE_USERNAME
+        - name: DATABASE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: database-credentials
+              key: DATABASE_PASSWORD

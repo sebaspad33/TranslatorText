@@ -1,0 +1,47 @@
+# consultar versión de minikube
+minikube version
+
+# iniciar clúster kubernetes
+minikube start
+
+# listar namespace
+kubectl get namespace
+kubectl get ns
+
+# crear un namespace "sebas" por comando
+kubectl create namespace sebas
+
+# crear un namespace "sebas" por comando y un "namespace.yml"
+kubectl apply -f namespace.yml
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: sebas
+---
+
+# consultar namespace en uso por "default"
+kubectl config view --minify | grep namespace
+
+# cambiar un namespace en uso por "default" a "sebas"
+kubectl config set-context --current --namespace=sebas
+
+# consultar todos los recursos de un namespace "sebas"
+kubectl get all -n sebas
+
+# consultar todos los recursos y secret de un namespace "sebas"
+kubectl get all,secrets -n sebas
+
+# listar services del namespace "sebas"
+minikube service translate-azure-be -n sebas
+minikube service list
+
+# probar el microservicio dentro del clúster con curl
+curl http://192.168.49.2:30001/translate-azure-be
+curl http://192.168.49.2:30001/translate-azure-be/id/1
+
+# crear un túnel de puerto la máquina local (host) y el clúster de Kubernetes
+kubectl port-forward service/translate-azure-be 8080:30001
+
+# ver los logs del pod (logs del proyecto)
+kubectl logs nombre-pod

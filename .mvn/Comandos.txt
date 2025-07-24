@@ -1,0 +1,54 @@
+Maven:
+# Limpia el proyecto y compila el código, omitiendo las pruebas.
+mvn clean install -DskipTests
+
+JAR:
+java -jar target/TranslateTextEdu-0.0.1-SNAPSHOT.jar
+
+SWAGGER: 
+https://fictional-zebra-56w9g6xp9xrcv5w6-8080.app.github.dev/swagger-ui.html
+
+
+DOCKER: 
+
+# Limpia el proyecto y compila el código, omitiendo las pruebas.
+mvn clean install -DskipTests
+
+# Construye una imagen de Docker con la etiqueta "latest" para el proyecto.
+docker build -t sebast19/translate-azure:latest .
+
+# Ejecuta un contenedor a partir de la imagen creada, mapeando el puerto 8080 del contenedor al puerto 8080 de la máquina host.
+docker run --name newcontainer -p 8080:8080 sebast19/translate-azure:latest
+
+# Inicia sesión en Docker Hub con el usuario "sebast19".
+docker login -u sebast19
+# (Aquí debes pegar el token de acceso)
+
+# Sube la imagen etiquetada como "latest" al repositorio de Docker Hub.
+docker push sebast19/translate-azure:latest
+
+
+
+DOCKER COMPOSE: 
+
+# Levanta los servicios definidos en el archivo docker-compose.yml, construyendo las imágenes si es necesario.
+docker-compose up --build
+
+
+Reseteo de imagen: 
+
+# Elimina todos los contenedores detenidos.
+docker rm -f $(docker ps -aq)
+
+# Elimina todas las imágenes de Docker.
+docker rmi -f $(docker images -aq)
+
+# Muestra todas las imágenes disponibles en el sistema.
+docker images
+
+# Muestra todos los contenedores, incluyendo los detenidos.
+docker ps -a
+
+
+
+
